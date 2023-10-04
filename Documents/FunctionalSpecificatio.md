@@ -15,7 +15,7 @@ The goal is to create an app that will help golf players improve. The app will b
 
 ## Functional requirements
 
-The app will be able to locate the user's position. The app will be able to detect a stop when the player is walking to his ball. It will be then able to calculate the distance reached with the shot, what is the current score of the player and what is his next best possible shot. 
+The app will be able to locate the user's position. The app will be able to detect a stop when the player is walking to his ball. It will be then able to calculate the distance reached with the shot, what is the current score of the player and what is his next best possible shot.
 
 The app will also be able to save the scores the user did on each hole of a course, the total score and where did the user play.
 
@@ -25,11 +25,15 @@ The app will also be able to provide solution if the user is not sure of the exa
 
 ## Acceptance criteria
 
+- The app should be able to locate the user within one meter
+- The app should not use 50% of the battery in a golf game within 5%
+- The app should not be more than 100 Mo
+
 ## Design
 
 ## Non functional requirements
 
-The app will be able to track the user's position while consuming a minimal amount of battery. The goal is that the user will be able to use it during a full golf game, which can approach five hours. 
+The app will be able to track the user's position while consuming a minimal amount of battery. The goal is that the user will be able to use it during a full golf game, which can approach five hours.
 
 ## Out of scope
 
