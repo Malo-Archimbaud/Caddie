@@ -34,6 +34,8 @@ The app will also be able to provide solution if the user is not sure of the exa
 ## Non functional requirements
 
 The app will be able to track the user's position while consuming a minimal amount of battery. The goal is that the user will be able to use it during a full golf game, which can approach five hours.
+The app will be compatible for both Ios and Android devices to extend the possible user base.
+The app will have to respect both App store and Play store policies to ensure that it is releasable on both platform.
 
 ## Out of scope
 
