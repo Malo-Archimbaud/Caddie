@@ -31,11 +31,29 @@ The app will also be able to provide solution if the user is not sure of the exa
 
 ## Design
 
+A white background with greenish tones is envisaged as default. The white background is the best choice since the app will be used during daytime. The greenish tones is here to remind of the golf course, being grass. When opening the app, the first screen to appear is the "new game" screen, and a side menu.
+The menu will contain 5 parts:
+
+- The "new game" screen
+- The "previous game" screen
+- The "rules" screen
+- The "calibrate" screen
+- The "options" screen
+- The "legal mentions" screen
+
+The "new game" screen will feature a single button to press that will start a new game and automatically set up the course which is played on thanks to the user localisation. Then, the part the player is in will be rendered when he will move across the course.
+The "previous game" will feature a list of all game played within a certain time frame defined by the user. The user will be able to have more details on each game played by clicking on them. These details include shots for each hole, distance done for each shots, the date and the weather conditions.
+The "rules" screen will feature a list of all the current golf rules divided in different sub-menu for a good readability.
+The "calibrate" screen is where the user will be able to provide a distance for each golf club. This will allow the app to refine its advice when the user will be on a golf course.
+The "options" screen will feature different options such as the time window in which the previous game will be preserved and the colors mode the user want for his app
+The "legal mention" will provide all the legal mentions that has to be respected in order for the app to be releasable in the user's country.
+
 ## Non functional requirements
 
 The app will be able to track the user's position while consuming a minimal amount of battery. The goal is that the user will be able to use it during a full golf game, which can approach five hours.
 The app will be compatible for both Ios and Android devices to extend the possible user base.
 The app will have to respect both App store and Play store policies to ensure that it is releasable on both platform.
+The app will have to respect Europeans and British law regarding privacy and localisation processing to ensure the app is releasable in Europe and the UK.
 
 ## Out of scope
 
