@@ -1,6 +1,6 @@
 import 'package:caddie/localisation.dart';
 import 'package:flutter/material.dart';
-import 'package:caddie/widgets/app_bar.dart';
+import 'package:caddie/widgets/app_bar_widget.dart';
 import 'package:geolocator/geolocator.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,9 +19,11 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Center(
       child: Column(
         children: [
-          const AppBarWidget(),
-          const Text('Welcome to Caddie!'),
+          const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [AppBarWidget()]),
           
+          const Text('Home Screen'),
           FutureBuilder<Position>(
             future: _position,
             builder: (context, snapshot) {
