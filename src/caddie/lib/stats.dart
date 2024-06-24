@@ -13,14 +13,10 @@ class _StatsScreenState extends State<StatsScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            AppBarWidget(),
-            StatsWidget()
-          ],
-        ),
-        )
-      );
+        body: Center(
+      child: Column(
+        children: [AppBarWidget(), StatsWidget()],
+      ),
+    ));
   }
 }

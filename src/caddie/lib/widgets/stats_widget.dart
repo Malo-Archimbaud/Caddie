@@ -49,7 +49,8 @@ class _StatsWidgetState extends State<StatsWidget> {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          final TextEditingController controller = TextEditingController();
+                          final TextEditingController controller =
+                              TextEditingController();
                           return AlertDialog(
                             content: TextFormField(
                               controller: controller,
@@ -67,7 +68,8 @@ class _StatsWidgetState extends State<StatsWidget> {
                               TextButton(
                                 onPressed: () {
                                   setState(() {
-                                    player.maxDistances[i] = int.parse(controller.text);
+                                    player.maxDistances[i] =
+                                        int.parse(controller.text);
                                   });
                                   Navigator.of(context).pop();
                                 },

@@ -18,12 +18,11 @@ Future<Position> determinePosition() async {
       return Future.error('Location permissions are denied');
     }
   }
-  
+
   if (permission == LocationPermission.deniedForever) {
     return Future.error(
-      'Location permissions are permanently denied, we cannot request permissions.');
-  } 
+        'Location permissions are permanently denied, we cannot request permissions.');
+  }
   print('Location permissions are granted');
   return await Geolocator.getCurrentPosition();
 }
-

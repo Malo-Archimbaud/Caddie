@@ -11,7 +11,6 @@ class SavedGames extends StatefulWidget {
 }
 
 class _SavedGamesState extends State<SavedGames> {
-
   @override
   void initState() {
     super.initState();
@@ -29,19 +28,16 @@ class _SavedGamesState extends State<SavedGames> {
       DeviceOrientation.portraitDown,
     ]);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            AppBarWidget(),
-            Text('Saved Games'),
-            SavedGamesWidget()
-          ]
-        )
-      ),
+          child: Column(children: [
+        AppBarWidget(),
+        Text('Saved Games'),
+        SavedGamesWidget()
+      ])),
     );
   }
 }

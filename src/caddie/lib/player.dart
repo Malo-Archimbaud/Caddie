@@ -15,7 +15,7 @@ class Player {
     maxDistances[index] += 5;
   }
 
-  void addClub(String clubName, String maxDistance){
+  void addClub(String clubName, String maxDistance) {
     clubs.add(Clubs.values.firstWhere((e) => e.name == clubName));
     maxDistances.add(int.parse(maxDistance));
   }

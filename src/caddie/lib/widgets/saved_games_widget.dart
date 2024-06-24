@@ -7,17 +7,18 @@ class SavedGamesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Games games = Games();
-    games.addGame(Game(date: '26-05-2024',
-    place: 'Golf de Bourges', 
-    pars:[4,4,5,4,3,5,3,5,3,4,4,3,5,3,4,4,5,4], 
-    scores: [3,4,6,4,4,4,3,5,3,4,4,3,5,4,4,3,5,4]));
+    games.addGame(Game(
+        date: '26-05-2024',
+        place: 'Golf de Bourges',
+        pars: [4, 4, 5, 4, 3, 5, 3, 5, 3, 4, 4, 3, 5, 3, 4, 4, 5, 4],
+        scores: [3, 4, 6, 4, 4, 4, 3, 5, 3, 4, 4, 3, 5, 4, 4, 3, 5, 4]));
 
     return Container(
         child: decorator(Column(
       children: [
         Row(
           children: [
-            cell(text:''),
+            cell(text: ''),
             for (var game in games) cell(text: game.date, width: 2),
             for (var game in games) cell(text: game.place, width: 14)
           ],
@@ -49,8 +50,8 @@ class SavedGamesWidget extends StatelessWidget {
 
   Widget cell({required String text, double? width, double? height}) {
     return Container(
-        width: 39 + 39*(width ?? 0),
-        height: 39 + 39*(height ?? 0),
+        width: 39 + 39 * (width ?? 0),
+        height: 39 + 39 * (height ?? 0),
         //padding: const EdgeInsets.all(8),
         //margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(border: Border.all()),

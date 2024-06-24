@@ -1,10 +1,14 @@
 class Game {
-  late String date; 
+  late String date;
   late String place;
   late List<int> pars;
   late List<int> scores;
 
-  Game({required this.date, required this.place, required this.pars, required this.scores});
+  Game(
+      {required this.date,
+      required this.place,
+      required this.pars,
+      required this.scores});
 
   int get totalScore {
     int total = 0;
@@ -13,6 +17,7 @@ class Game {
     }
     return total;
   }
+
   int get totalPar {
     int total = 0;
     for (int i = 0; i < pars.length; i++) {
@@ -24,12 +29,15 @@ class Game {
   String getDate() {
     return date;
   }
+
   String getPlace() {
     return place;
   }
+
   List<int> getPars() {
     return pars;
   }
+
   List<int> getScores() {
     return scores;
   }

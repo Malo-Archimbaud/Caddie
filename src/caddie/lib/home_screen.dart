@@ -22,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
           const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [AppBarWidget()]),
-          
           const Text('Home Screen'),
           FutureBuilder<Position>(
             future: _position,
