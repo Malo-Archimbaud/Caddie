@@ -2,6 +2,7 @@ import 'package:caddie/localisation.dart';
 import 'package:flutter/material.dart';
 import 'package:caddie/widgets/app_bar_widget.dart';
 import 'package:geolocator/geolocator.dart';
+import 'dart:math';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,14 +11,24 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+class BackgroundImages {
+  final List<String> images = [
+    'assets/background_golf_1.jpg',
+    'assets/background_golf_2.jpg',
+    'assets/background_golf_3.jpg',
+  ];
+}
+
 class _HomeScreenState extends State<HomeScreen> {
   final Future<Position> _position = determinePosition();
+  final random = Random();
+  final String image = BackgroundImages().images[Random().nextInt(3)];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(children: [
-          Positioned.fill(child: Image.asset('assets/background_golf_1.jpg', fit: BoxFit.cover)),
+          Positioned.fill(child: Image.asset(image, fit: BoxFit.cover)),
       Column(
         children: [
           const Column(
