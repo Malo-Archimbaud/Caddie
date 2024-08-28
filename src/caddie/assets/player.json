@@ -1,0 +1,5 @@
+{
+    "name": "Malo",
+    "clubs": ["driver", "hybride5", "fer5", "fer6", "fer7", "fer8", "fer9", "pw", "sw", "putter"],
+    "maxDistances": [200, 180, 150, 140, 130, 120, 110, 90, 60, 0]
+}

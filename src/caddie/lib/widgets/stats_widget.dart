@@ -1,6 +1,7 @@
-import 'package:caddie/clubs.dart';
+import 'dart:convert';
 import 'package:caddie/player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class StatsWidget extends StatefulWidget {
   const StatsWidget({super.key});
@@ -10,91 +11,103 @@ class StatsWidget extends StatefulWidget {
 }
 
 class _StatsWidgetState extends State<StatsWidget> {
-  late Player player;
+  Player? player;
 
   @override
   void initState() {
     super.initState();
-    player = Player(
-      name: 'Malo',
-      clubs: [
-        Clubs.driver,
-        Clubs.hybride5,
-        Clubs.fer5,
-        Clubs.fer6,
-        Clubs.fer7,
-        Clubs.fer8,
-        Clubs.fer9,
-        Clubs.pw,
-        Clubs.sw,
-        Clubs.putter
-      ],
-      maxDistances: [220, 170, 150, 140, 130, 120, 110, 80, 50, 25],
-    );
+    _loadPlayerData();
   }
+
+  Future<void> _loadPlayerData() async {
+  try {
+    // Load the JSON file from assets
+    final String data = await rootBundle.loadString('assets/player.json');
+
+    // Decode the JSON data
+    final Map<String, dynamic> json = jsonDecode(data);
+
+    // Check if the JSON contains expected keys
+    if (json['name'] == null || json['clubs'] == null || json['maxDistances'] == null) {
+      throw Exception('Missing required keys in the JSON data');
+    }
+
+    // Initialize the Player object
+    setState(() {
+      player = Player.fromJson(json);
+    });
+
+  } catch (e) {
+    // Handle errors
+    print('Error loading player data: $e');
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        decorator(Column(children: [
-          Row(children: [cell(text: 'Clubs'), cell(text: 'Distance max')]),
-          for (var i = 0; i < player.getNbClubs(); i++)
-            Row(children: [
-              cell(text: player.clubs[i].name),
-              cell(
-                  text: player.maxDistances[i].toString(),
-                  onPressed: () {
-                    // When the user taps on a distance, he can type the new distance
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          final TextEditingController controller =
-                              TextEditingController();
-                          return AlertDialog(
-                            content: TextFormField(
-                              controller: controller,
-                              decoration: const InputDecoration(
-                                  labelText: 'Nouvelle distance'),
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (value) {
-                                setState(() {
-                                  player.maxDistances[i] = int.parse(value);
-                                });
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    player.maxDistances[i] =
-                                        int.parse(controller.text);
-                                  });
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
-                        });
-                  })
-            ]),
-        ])),
-        ElevatedButton(
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    content: addClubScreen(),
-                  );
-                });
-          },
-          child: const Text('Ajouter un club'),
-        )
-      ],
-    );
+    return player == null
+        ? const Center(child: CircularProgressIndicator())
+        : Column(
+            children: [
+              decorator(Column(children: [
+                Row(children: [cell(text: 'Clubs'), cell(text: 'Distance max')]),
+                for (var i = 0; i < player!.getNbClubs(); i++)
+                  Row(children: [
+                    cell(text: player!.clubs[i].name),
+                    cell(
+                        text: player!.maxDistances[i].toString(),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                final TextEditingController controller =
+                                    TextEditingController();
+                                return AlertDialog(
+                                  content: TextFormField(
+                                    controller: controller,
+                                    decoration: const InputDecoration(
+                                        labelText: 'Nouvelle distance'),
+                                    keyboardType: TextInputType.number,
+                                    onFieldSubmitted: (value) {
+                                      setState(() {
+                                        player!.maxDistances[i] =
+                                            int.parse(value);
+                                      });
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          player!.maxDistances[i] =
+                                              int.parse(controller.text);
+                                        });
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              });
+                        })
+                  ]),
+              ])),
+              ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: addClubScreen(),
+                        );
+                      });
+                },
+                child: const Text('Ajouter un club'),
+              )
+            ],
+          );
   }
 
   Widget cell({required String text, VoidCallback? onPressed}) {
@@ -138,7 +151,7 @@ class _StatsWidgetState extends State<StatsWidget> {
         ElevatedButton(
           onPressed: () {
             setState(() {
-              player.addClub(
+              player!.addClub(
                 clubNameController.text,
                 maxDistanceController.text,
               );

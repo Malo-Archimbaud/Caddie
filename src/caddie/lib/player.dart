@@ -7,6 +7,14 @@ class Player {
 
   Player({required this.name, required this.clubs, required this.maxDistances});
 
+  factory Player.fromJson(Map<String, dynamic> json) {
+    return Player(
+      name: json['name'],
+      clubs: List<Clubs>.from(json['clubs'].map((club) => Clubs.values.firstWhere((e) => e.name == club))),
+      maxDistances: List<int>.from(json['maxDistances']),
+    );
+  }
+
   int getNbClubs() {
     return clubs.length;
   }
