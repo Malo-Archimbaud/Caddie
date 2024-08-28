@@ -15,6 +15,14 @@ class Player {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'clubs': clubs.map((club) => club.toString().split('.').last).toList(),
+      'maxDistances': maxDistances,
+    };
+  }
+
   int getNbClubs() {
     return clubs.length;
   }

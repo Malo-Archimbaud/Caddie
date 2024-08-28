@@ -1,7 +1,10 @@
 import 'dart:convert';
-import 'package:caddie/player.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'package:caddie/player.dart';
 
 class StatsWidget extends StatefulWidget {
   const StatsWidget({super.key});
@@ -11,7 +14,9 @@ class StatsWidget extends StatefulWidget {
 }
 
 class _StatsWidgetState extends State<StatsWidget> {
-  Player? player;
+  late Player player;
+  bool _isPlayerLoaded = false;
+  String? _filePath; // To store the file path for debugging
 
   @override
   void initState() {
@@ -20,94 +25,100 @@ class _StatsWidgetState extends State<StatsWidget> {
   }
 
   Future<void> _loadPlayerData() async {
-  try {
-    // Load the JSON file from assets
-    final String data = await rootBundle.loadString('assets/player.json');
-
-    // Decode the JSON data
-    final Map<String, dynamic> json = jsonDecode(data);
-
-    // Check if the JSON contains expected keys
-    if (json['name'] == null || json['clubs'] == null || json['maxDistances'] == null) {
-      throw Exception('Missing required keys in the JSON data');
+    try {
+      final String data = await rootBundle.loadString('assets/player.json');
+      final Map<String, dynamic> json = jsonDecode(data);
+      setState(() {
+        player = Player.fromJson(json);
+        _isPlayerLoaded = true;
+      });
+    } catch (e) {
+      print("Error loading player data: $e");
     }
-
-    // Initialize the Player object
-    setState(() {
-      player = Player.fromJson(json);
-    });
-
-  } catch (e) {
-    // Handle errors
-    print('Error loading player data: $e');
   }
-}
 
+  Future<void> _savePlayerData() async {
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final file = File('${directory.path}/player.json');
+      _filePath = file.path; // Store file path for debugging
+
+      final String json = jsonEncode(player.toJson());
+
+      await file.writeAsString(json);
+      print("Player data saved successfully at: $_filePath");
+    } catch (e) {
+      print("Error saving player data: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return player == null
-        ? const Center(child: CircularProgressIndicator())
-        : Column(
-            children: [
-              decorator(Column(children: [
-                Row(children: [cell(text: 'Clubs'), cell(text: 'Distance max')]),
-                for (var i = 0; i < player!.getNbClubs(); i++)
-                  Row(children: [
-                    cell(text: player!.clubs[i].name),
-                    cell(
-                        text: player!.maxDistances[i].toString(),
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                final TextEditingController controller =
-                                    TextEditingController();
-                                return AlertDialog(
-                                  content: TextFormField(
-                                    controller: controller,
-                                    decoration: const InputDecoration(
-                                        labelText: 'Nouvelle distance'),
-                                    keyboardType: TextInputType.number,
-                                    onFieldSubmitted: (value) {
-                                      setState(() {
-                                        player!.maxDistances[i] =
-                                            int.parse(value);
-                                      });
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          player!.maxDistances[i] =
-                                              int.parse(controller.text);
-                                        });
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                );
-                              });
-                        })
-                  ]),
-              ])),
-              ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          content: addClubScreen(),
-                        );
-                      });
-                },
-                child: const Text('Ajouter un club'),
-              )
-            ],
-          );
+    if (!_isPlayerLoaded) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return Column(
+      children: [
+        decorator(Column(children: [
+          Row(children: [cell(text: 'Clubs'), cell(text: 'Distance max')]),
+          for (var i = 0; i < player.getNbClubs(); i++)
+            Row(children: [
+              cell(text: player.clubs[i].name),
+              cell(
+                  text: player.maxDistances[i].toString(),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          final TextEditingController controller =
+                              TextEditingController();
+                          return AlertDialog(
+                            content: TextFormField(
+                              controller: controller,
+                              decoration: const InputDecoration(
+                                  labelText: 'Nouvelle distance'),
+                              keyboardType: TextInputType.number,
+                              onFieldSubmitted: (value) {
+                                setState(() {
+                                  player.maxDistances[i] = int.parse(value);
+                                });
+                                _savePlayerData(); // Save data after modification
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    player.maxDistances[i] =
+                                        int.parse(controller.text);
+                                  });
+                                  _savePlayerData(); // Save data after modification
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        });
+                  })
+            ]),
+        ])),
+        ElevatedButton(
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: addClubScreen(),
+                  );
+                });
+          },
+          child: const Text('Ajouter un club'),
+        )
+      ],
+    );
   }
 
   Widget cell({required String text, VoidCallback? onPressed}) {
@@ -151,11 +162,12 @@ class _StatsWidgetState extends State<StatsWidget> {
         ElevatedButton(
           onPressed: () {
             setState(() {
-              player!.addClub(
+              player.addClub(
                 clubNameController.text,
                 maxDistanceController.text,
               );
             });
+            _savePlayerData(); // Save data after adding a new club
             Navigator.of(context).pop();
           },
           child: const Text('Ajouter'),
