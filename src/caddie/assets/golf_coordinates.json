@@ -1,0 +1,18 @@
+{
+    "golf_courses": [
+        {
+            "name": "Bourges",
+            "coordinates": {
+                "latitude": 47.0527,
+                "longitude": 2.4129
+            }
+        },
+        {
+            "name": "Vierzon",
+            "coordinates": {
+                "latitude": 47.2396,
+                "longitude": 2.1285
+            }
+        }
+    ]
+}

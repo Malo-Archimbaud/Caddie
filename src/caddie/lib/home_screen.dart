@@ -1,7 +1,6 @@
-import 'package:caddie/localisation.dart';
+import 'package:caddie/new_game.dart';
 import 'package:flutter/material.dart';
 import 'package:caddie/widgets/app_bar_widget.dart';
-import 'package:geolocator/geolocator.dart';
 import 'dart:math';
 
 class HomeScreen extends StatefulWidget {
@@ -20,7 +19,6 @@ class BackgroundImages {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Future<Position> _position = determinePosition();
   final random = Random();
   final String image = BackgroundImages().images[Random().nextInt(3)];
 
@@ -53,7 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
-                              Navigator.of(context).pushNamed('/newGame');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => NewGameScreen()),
+                              );
                             },
                             child: const Text('Oui'))
                       ],
@@ -66,28 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ]));
   }
-
-  Widget newGameScreen() {
-    return Scaffold(
-        body: Center(
-      child: Column(
-        children: [
-          const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [AppBarWidget()]),
-          const Text('Nouvelle partie'),
-          ElevatedButton(
-            onPressed: () {
-              // add logic
-            },
-            child: const Text('Start New Game'),
-          )
-        ],
-      ),
-    ));
-  }
 }
-
 /*FutureBuilder<Position>(
             future: _position,
             builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
