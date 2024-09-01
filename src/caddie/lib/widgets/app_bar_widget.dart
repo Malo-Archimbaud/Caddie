@@ -34,11 +34,11 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           onPressed: () {
             GoRouter.of(context).go('/rules');
           }),
-      IconButton(
-          icon: const Icon(Icons.settings),
-          onPressed: () {
-            GoRouter.of(context).go('/settings');
-          }),
+      // IconButton(
+      //     icon: const Icon(Icons.settings),
+      //     onPressed: () {
+      //       GoRouter.of(context).go('/settings');
+      //     }),
     ]));
   }
 }
