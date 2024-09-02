@@ -16,7 +16,6 @@ class StatsWidget extends StatefulWidget {
 class _StatsWidgetState extends State<StatsWidget> {
   late Player player;
   bool _isPlayerLoaded = false;
-  String? _filePath; // To store the file path for debugging
 
   @override
   void initState() {
@@ -33,7 +32,7 @@ class _StatsWidgetState extends State<StatsWidget> {
         _isPlayerLoaded = true;
       });
     } catch (e) {
-      print("Error loading player data: $e");
+      debugPrint("Error loading player data: $e");
     }
   }
 
@@ -41,14 +40,12 @@ class _StatsWidgetState extends State<StatsWidget> {
     try {
       final directory = await getApplicationDocumentsDirectory();
       final file = File('${directory.path}/player.json');
-      _filePath = file.path; // Store file path for debugging
-
       final String json = jsonEncode(player.toJson());
 
       await file.writeAsString(json);
-      print("Player data saved successfully at: $_filePath");
+      debugPrint("Player data saved successfully at: ${file.path}");
     } catch (e) {
-      print("Error saving player data: $e");
+      debugPrint("Error saving player data: $e");
     }
   }
 
@@ -60,79 +57,140 @@ class _StatsWidgetState extends State<StatsWidget> {
 
     return Column(
       children: [
-        decorator(Column(children: [
-          Row(children: [cell(text: 'Clubs'), cell(text: 'Distance max')]),
-          for (var i = 0; i < player.getNbClubs(); i++)
-            Row(children: [
-              cell(text: player.clubs[i].name),
-              cell(
-                  text: player.maxDistances[i].toString(),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          final TextEditingController controller =
-                              TextEditingController();
-                          return AlertDialog(
-                            content: TextFormField(
-                              controller: controller,
-                              decoration: const InputDecoration(
-                                  labelText: 'Nouvelle distance'),
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (value) {
-                                setState(() {
-                                  player.maxDistances[i] = int.parse(value);
-                                });
-                                _savePlayerData(); // Save data after modification
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  setState(() {
-                                    player.maxDistances[i] =
-                                        int.parse(controller.text);
-                                  });
-                                  _savePlayerData(); // Save data after modification
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
-                        });
-                  })
-            ]),
-        ])),
+        _buildStatsTable(),
         ElevatedButton(
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    content: addClubScreen(),
-                  );
-                });
-          },
+          onPressed: () => _showAddClubDialog(),
           child: const Text('Ajouter un club'),
-        )
+        ),
       ],
     );
   }
 
-  Widget cell({required String text, VoidCallback? onPressed}) {
-    return GestureDetector(
-        onTap: onPressed,
-        child: Container(
-            width: 180,
-            height: 50,
-            decoration: BoxDecoration(border: Border.all()),
-            child: Center(
-                child: Text(text, style: const TextStyle(fontSize: 20)))));
+  Widget _buildStatsTable() {
+    return _decorator(
+      Column(
+        children: [
+          Row(
+            children: [
+              _cell(text: 'Clubs'),
+              _cell(text: 'Distance max'),
+            ],
+          ),
+          for (int i = 0; i < player.getNbClubs(); i++)
+            Row(
+              children: [
+                _cell(text: player.clubs[i].name),
+                _cell(
+                  text: player.maxDistances[i].toString(),
+                  onPressed: () => _showEditDistanceDialog(i),
+                ),
+              ],
+            ),
+        ],
+      ),
+    );
   }
 
-  Widget decorator(Widget child) {
+  void _showEditDistanceDialog(int index) {
+    final controller = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: TextFormField(
+            controller: controller,
+            decoration: const InputDecoration(labelText: 'Nouvelle distance'),
+            keyboardType: TextInputType.number,
+            onFieldSubmitted: (value) {
+              _updateDistance(index, int.parse(value));
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                _updateDistance(index, int.parse(controller.text));
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _updateDistance(int index, int newDistance) {
+    setState(() {
+      player.maxDistances[index] = newDistance;
+    });
+    _savePlayerData();
+    Navigator.of(context).pop();
+  }
+
+  void _showAddClubDialog() {
+    final clubNameController = TextEditingController();
+    final maxDistanceController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: clubNameController,
+                decoration: const InputDecoration(labelText: 'Nom du club'),
+              ),
+              TextFormField(
+                controller: maxDistanceController,
+                decoration: const InputDecoration(labelText: 'Distance max'),
+                keyboardType: TextInputType.number,
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                _addNewClub(
+                  clubNameController.text,
+                  int.parse(maxDistanceController.text),
+                );
+              },
+              child: const Text('Ajouter'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _addNewClub(String name, int maxDistance) {
+    setState(() {
+      player.addClub(name, maxDistance.toString());
+    });
+    _savePlayerData();
+    Navigator.of(context).pop();
+  }
+
+  Widget _cell({required String text, VoidCallback? onPressed}) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        width: 180,
+        height: 50,
+        decoration: BoxDecoration(border: Border.all()),
+        child: Center(
+          child: Text(
+            text,
+            style: const TextStyle(fontSize: 20),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _decorator(Widget child) {
     return Container(
       padding: const EdgeInsets.all(4),
       margin: const EdgeInsets.all(4),
@@ -140,39 +198,6 @@ class _StatsWidgetState extends State<StatsWidget> {
         border: Border.all(),
       ),
       child: child,
-    );
-  }
-
-  Widget addClubScreen() {
-    final TextEditingController clubNameController = TextEditingController();
-    final TextEditingController maxDistanceController = TextEditingController();
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TextFormField(
-          controller: clubNameController,
-          decoration: const InputDecoration(labelText: 'Nom du club'),
-        ),
-        TextFormField(
-          controller: maxDistanceController,
-          decoration: const InputDecoration(labelText: 'Distance max'),
-          keyboardType: TextInputType.number,
-        ),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              player.addClub(
-                clubNameController.text,
-                maxDistanceController.text,
-              );
-            });
-            _savePlayerData(); // Save data after adding a new club
-            Navigator.of(context).pop();
-          },
-          child: const Text('Ajouter'),
-        )
-      ],
     );
   }
 }
