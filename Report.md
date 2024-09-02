@@ -4,6 +4,7 @@
 
 <details>
 <summary>Table of contents</summary>
+
 - [Writen Report](#writen-report)
   - [Table of contents](#table-of-contents)
   - [Context](#context)
@@ -11,6 +12,19 @@
   - [How Golf works](#how-golf-works)
   - [Requirements](#requirements)
   - [Functionalities](#functionalities)
+  - [Technologies](#technologies)
+    - [Programming languages](#programming-languages)
+    - [Frameworks](#frameworks)
+    - [Tools](#tools)
+    - [Libraries](#libraries)
+  - [Implementation](#implementation)
+  - [Choices](#choices)
+    - [Technological choices](#technological-choices)
+    - [Design choices](#design-choices)
+  - [Management](#management)
+  - [Future improvements](#future-improvements)
+  - [Conclusion](#conclusion)
+  
 </details>
 
 ## Context
@@ -45,20 +59,43 @@ The application will have the following functionalities:
 
 ## Technologies
 
-## Programming languages
+### Programming languages
 
 - Dart
 
-## Frameworks
+### Frameworks
 
 - Flutter
 
-## Tools
+### Tools
 
 - Android Studio
 - Visual Studio Code
 
-## Libraries
+### Libraries
 
 - geoloactor: used to get the user's location and calculate the distance to the hole
 
+## Implementation
+
+To determine where to aim and which club to use, each hole or part of a hole is represented by an area defined by 4 points and an aiming point. The first thing done is to check in which area the user is located. Then, the distance to the aiming point is calculated, and the club to use is determined based on the distance and the info the user has provided about his clubs.
+
+To keep track of the user's scores, a scorecard is used. The user can enter his score for each hole and see his total score.
+
+To keep track of the user's distance, a stats page is used. The user can change the distance or add a new club to his bag.
+
+## Choices
+
+### Technological choices
+
+The application was developed using the Flutter framework because it allows for the development of cross-platform applications. This means that the application can be run on both Android and iOS devices. The geolocator library was used to get the user's location and calculate the distance to the hole.
+
+### Design choices
+
+The application was designed to be user-friendly and easy to use. The user interface is simple and intuitive, with clear buttons and labels.
+
+## Management
+
+## Future improvements
+
+## Conclusion
