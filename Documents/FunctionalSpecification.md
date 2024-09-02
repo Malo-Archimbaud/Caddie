@@ -1,4 +1,4 @@
-# Functional Specification: Caddie*
+# Functional Specification: Caddie
 
 ## Introduction
 
@@ -7,7 +7,7 @@ The scope of this document encompasses the features, functionalities and user in
 
 ## Table of Contents
 
-- [Functional Specification: Caddie\*](#functional-specification-caddie)
+- [Functional Specification: Caddie](#functional-specification-caddie)
   - [Introduction](#introduction)
   - [Table of Contents](#table-of-contents)
   - [General Description](#general-description)
