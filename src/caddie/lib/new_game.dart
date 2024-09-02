@@ -16,6 +16,7 @@ class NewGameScreen extends StatefulWidget {
 
 class NewGameScreenState extends State<NewGameScreen> {
   late Future<Position> _position;
+  late Future<String> _nearestGolfCourse;
   late Player player;
   List<Point> area = [];
   String golfCourse = '';
@@ -23,7 +24,12 @@ class NewGameScreenState extends State<NewGameScreen> {
   @override
   void initState() {
     super.initState();
+    _initializeGame();
+  }
+
+  void _initializeGame() {
     _position = determinePosition();
+    _nearestGolfCourse = _getNearestGolfCourse();
     _loadPlayerData();
   }
 
@@ -35,7 +41,7 @@ class NewGameScreenState extends State<NewGameScreen> {
           children: [
             const AppBarWidget(),
             FutureBuilder<String>(
-              future: _getNearestGolfCourse(),
+              future: _nearestGolfCourse,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -52,6 +58,15 @@ class NewGameScreenState extends State<NewGameScreen> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            _initializeGame(); // Re-trigger all calculations
+          });
+        },
+        child: const Icon(Icons.refresh),
+        tooltip: 'Recalculate',
       ),
     );
   }
@@ -168,8 +183,8 @@ class NewGameScreenState extends State<NewGameScreen> {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          int clubIndex = player.maxDistances.lastIndexWhere((d) => d >= distance);
-          print(clubIndex);
+          int clubIndex =
+              player.maxDistances.lastIndexWhere((d) => d >= distance);
           if (clubIndex == -1) {
             clubIndex = 0; // Default to the first club if none match
           }
