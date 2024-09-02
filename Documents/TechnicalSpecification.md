@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This document describes the technical specification of the project. It includes the architecture, and implementation details of the project.
+This document describes the technical specifications of the project. It includes the architecture and implementation details of the project.
 
 ## General view
 
@@ -32,7 +32,7 @@ The application will be developed using the Flutter framework. The application w
 
 The application will use the GPS of the phone to localize the user and give him advice on where to aim and how far he should try to go.
 
-To know which hole the user is on, the golf course is divided into zones, delimited by 4 sides. Each zone will have a GPS coordinate that is corresponding to where to aim when in the said zone. Then, depending on the distance the user can send the ball with a club, the most optimal club will be chosen. The user will be able to input his score to evaluate his level and give him advice on what to do.
+To know which hole the user is on, the golf course is divided into zones, delimited by 4 sides. Each zone will have a GPS coordinate corresponding to where to aim when in the said zone. Then, depending on the distance the user can send the ball with a club, the most optimal club will be chosen. The user will be able to input his score to evaluate his level and advise him on what to do.
 
 The application will also provide all the rules and advice on what to do in each situation.
 
@@ -45,22 +45,22 @@ example:
 
 ```json
 {
-    "golf_courses": [
-        {
-            "name": "Bourges",
-            "coordinates": {
-                "latitude": 47.0527,
-                "longitude": 2.4129
-            }
-        },
-        {
-            "name": "Vierzon",
-            "coordinates": {
-                "latitude": 47.2396,
-                "longitude": 2.1285
-            }
-        }
-    ]
+    "golf_courses": [
+ {
+            "name": "Bourges",
+            "coordinates": {
+                "latitude": 47.0527,
+                "longitude": 2.4129
+ }
+ },
+ {
+            "name": "Vierzon",
+            "coordinates": {
+                "latitude": 47.2396,
+                "longitude": 2.1285
+ }
+ }
+ ]
 }
 ```
 
@@ -70,18 +70,18 @@ example:
 
 ```json
 {
-    "Holes": [
-        {
-            "area": [
-                [47.053183, 2.413813],
-                [47.052786, 2.413362],
-                [47.051097, 2.417122],
-                [47.051446, 2.417350]
-            ],
-            "name": 1,
-            "aim": [47.051353, 2.416996]
-        }
-    ]
+    "Holes": [
+ {
+            "area": [
+ [47.053183, 2.413813],
+ [47.052786, 2.413362],
+ [47.051097, 2.417122],
+ [47.051446, 2.417350]
+ ],
+            "name": 1,
+            "aim": [47.051353, 2.416996]
+ }
+ ]
 }
 ```
 
@@ -91,10 +91,10 @@ example:
 
 ```json
 {
-    "name": "Malo",
-    "clubs": ["driver", "hybride5", "fer5", "fer6", "fer7", "fer8", "fer9", "pw", "sw", "putter"],
-    "maxDistances": [200, 180, 150, 140, 130, 120, 110, 90, 60, 0]
+    "name": "Malo",
+    "clubs": ["driver", "hybride5", "fer5", "fer6", "fer7", "fer8", "fer9", "pw", "sw", "putter"],
+    "maxDistances": [200, 180, 150, 140, 130, 120, 110, 90, 60, 0]
 }
 ```
 
-The first file is used to load the corresponding zones file of the course the user is on. The second file is used to know where to aim in each zone. The third file is used to calculate the most optimal club to use.
+The first file loads the corresponding zones file of the course the user is on. The second file is used to know where to aim in each zone. The third file is used to calculate the most optimal club to use.
