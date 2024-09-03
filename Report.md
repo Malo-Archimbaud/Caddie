@@ -6,31 +6,31 @@
 <summary>Table of contents</summary>
 
 - [Writen Report](#writen-report)
-  - [Table of contents](#table-of-contents)
-  - [Context](#context)
-  - [Target audience](#target-audience)
-  - [How Golf works](#how-golf-works)
-  - [Requirements](#requirements)
-  - [Functionalities](#functionalities)
-  - [Technologies](#technologies)
-    - [Programming languages](#programming-languages)
-    - [Frameworks](#frameworks)
-    - [Tools](#tools)
-    - [Libraries](#libraries)
-  - [Implementation](#implementation)
-  - [Choices](#choices)
-    - [Technological choices](#technological-choices)
-    - [Design choices](#design-choices)
-  - [Management](#management)
-  - [Future improvements](#future-improvements)
-  - [Conclusion](#conclusion)
-  
+  - [Table of contents](#table-of-contents)
+  - [Context](#context)
+  - [Target audience](#target-audience)
+  - [How Golf works](#how-golf-works)
+  - [Requirements](#requirements)
+  - [Functionalities](#functionalities)
+  - [Technologies](#technologies)
+    - [Programming languages](#programming-languages)
+    - [Frameworks](#frameworks)
+    - [Tools](#tools)
+    - [Libraries](#libraries)
+  - [Implementation](#implementation)
+  - [Choices](#choices)
+    - [Technological choices](#technological-choices)
+    - [Design choices](#design-choices)
+  - [Management](#management)
+  - [Future improvements](#future-improvements)
+  - [Conclusion](#conclusion)
+
 </details>
 
 ## Context
 
 As a golf player, it often happened to me or my friends that we found ourselves in a situation where we did not know what to do. We did not know which club to use or where to aim to make the most optimal shot. I also had trouble keeping track of my progress, as I had nowhere to store my scores and analyze them.
-This is why I decided to create an application that would help golf players improve their level, adapt to a new course easier, and analyze their results to evaluate their level and give proper advice.
+This is why I decided to create an application that would help golf players improve their level, adapt to a new course more easily, and analyze their results to evaluate their level and give proper advice.
 
 ## Target audience
 
@@ -74,7 +74,7 @@ The application will have the following functionalities:
 
 ### Libraries
 
-- geoloactor: used to get the user's location and calculate the distance to the hole
+- geolocator: used to get the user's location and calculate the distance to the hole
 
 ## Implementation
 
@@ -96,11 +96,11 @@ The application was designed to be user-friendly and easy to use. The user inter
 
 ## Management
 
-The management of the project didn't go as planned. It revealed pretty difficult for me to work after school and keep focus on the project.
+The management of the project didn't go as planned. It was pretty difficult for me to work after school and keep focused on the project.
 
 Also, I wasn't able to work on the project during the summer holidays, as I decided to work to earn some money.
 
-All this made very difficult to work on the project at a good and regular pace, resulting in removing some functionalities. However, I was able to complete the main functionalities of the application, so having something functional.
+All this made it very difficult to work on the project at a good and regular pace, resulting in removing some functionalities. However, I was able to complete the main functionalities of the application, so having something functional.
 
 If I had to do it again, I would have planned my time better and worked on the project more regularly.
 
@@ -109,8 +109,8 @@ If I had to do it again, I would have planned my time better and worked on the p
 In the future, I would like to add the following functionalities to the application:
 
 - A map so the user can see the course and the aiming point in a more friendly way
-- Real time modifications of the weather conditions so the user can adapt his game
-- Automatisation of the process of recolting a course's data
+- Real-time modifications of the weather conditions so the user can adapt his game
+- Automatisation of the process of revolting a course's data
 
 I would also refactor the code to make it more readable and maintainable, as the language used was pretty new to me and some mistakes were made.
 
