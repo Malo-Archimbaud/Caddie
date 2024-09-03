@@ -96,6 +96,28 @@ The application was designed to be user-friendly and easy to use. The user inter
 
 ## Management
 
+The management of the project didn't go as planned. It revealed pretty difficult for me to work after school and keep focus on the project.
+
+Also, I wasn't able to work on the project during the summer holidays, as I decided to work to earn some money.
+
+All this made very difficult to work on the project at a good and regular pace, resulting in removing some functionalities. However, I was able to complete the main functionalities of the application, so having something functional.
+
+If I had to do it again, I would have planned my time better and worked on the project more regularly.
+
 ## Future improvements
 
+In the future, I would like to add the following functionalities to the application:
+
+- A map so the user can see the course and the aiming point in a more friendly way
+- Real time modifications of the weather conditions so the user can adapt his game
+- Automatisation of the process of recolting a course's data
+
+I would also refactor the code to make it more readable and maintainable, as the language used was pretty new to me and some mistakes were made.
+
 ## Conclusion
+
+In a nutshell, this project was a success, but not the one I was hoping for. I was able to complete the main functionalities of the application. I also learned a lot about mobile app development.
+
+I had to constantly adapt to new situations because of my lack of careful planning.
+
+Overall, I am satisfied with the result and I will continue to work on this project as I think it has potential, and it would be a great exercise for me to improve my skills.
